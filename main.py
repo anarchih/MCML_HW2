@@ -2,6 +2,7 @@ from os import listdir
 import numpy as np
 from PIL import Image
 from sklearn.svm import SVC
+import sys
 # from sklearn.metrics import precision_score, recall_score
 
 class ImageItem(object):
@@ -37,11 +38,12 @@ def readfiles(path, img_preprocess):
 def main():
     # Setting
     num_class = 26
-
+    training_directory = sys.argv[1]
+    test_directory = sys.argv[2]
 
     # Read, Preprocess and Downsize Image
-    images, labels = readfiles("training/", img_preprocess=method_1)
-    test_images, test_labels = readfiles("test/", img_preprocess=method_1)
+    images, labels = readfiles(training_directory, img_preprocess=method_1)
+    test_images, test_labels = readfiles(test_directory, img_preprocess=method_1)
 
     # Feature Selection
 
