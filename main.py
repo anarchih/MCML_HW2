@@ -9,7 +9,7 @@ class ImageItem(object):
         pass
 
 
-def test(im):
+def method_1(im):
     # rgb to grey
     new_im = im.convert("L")
 
@@ -40,8 +40,8 @@ def main():
 
 
     # Read, Preprocess and Downsize Image
-    images, labels = readfiles("training/", img_preprocess=test)
-    test_images, test_labels = readfiles("test/", img_preprocess=test)
+    images, labels = readfiles("training/", img_preprocess=method_1)
+    test_images, test_labels = readfiles("test/", img_preprocess=method_1)
 
     # Feature Selection
 
