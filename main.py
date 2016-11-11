@@ -4,7 +4,8 @@ from PIL import Image
 from sklearn.svm import SVC
 from sklearn import decomposition, preprocessing
 import sys
-# from sklearn.metrics import precision_score, recall_score
+from sklearn.metrics import precision_score, recall_score
+
 
 class ImageItem(object):
     def __init__(self):
@@ -17,6 +18,7 @@ def pca_transform(data_1, data_2, n_components):
     pca.fit(data)
     new_data = pca.transform(data)
     return new_data[:data_1.shape[0], :], new_data[data_1.shape[0]:, :]
+
 
 def method_1(im):
     # rgb to grey
@@ -58,18 +60,26 @@ def main():
     test_images = preprocessing.scale(test_images)
 
     # Feature Selection
-    images, test_images = pca_transform(images, test_images, 3)
+    images, test_images = pca_transform(images, test_images, 6)
 
     # Training
     tmp_label = [0] * len(labels)
-    model = [SVC() for i in range(num_class - 1)]
-    for i in range(num_class - 1):
+    model = [SVC() for i in range(num_class)]
+    for i in range(num_class):
         for j in range(len(labels)):
             tmp_label[j] = 1 if i == labels[j] else 0
         model[i].fit(images, tmp_label)
 
     # Testing
-
+    tmp_label = [0] * len(test_labels)
+    print("label  precision   recall")
+    for i in range(num_class):
+        for j in range(len(test_labels)):
+            tmp_label[j] = 1 if i == test_labels[j] else 0
+        test_pred = model[i].predict(test_images)
+        p = precision_score(tmp_label, test_pred)
+        r = recall_score(tmp_label, test_pred)
+        print("    %c     %.4f   %.4f" % (chr(i + 65), p, r))
 
 
 if __name__ == "__main__":
