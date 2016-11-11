@@ -39,7 +39,7 @@ def readfiles(path, img_preprocess):
         images[i] = img_preprocess(im)
         labels[i] = ord(f_name[0]) - ord('a')
 
-    return images, labels
+    return np.array(images, dtype=np.float), np.array(labels, dtype=np.float)
 
 
 def main():
