@@ -52,7 +52,9 @@ def main():
     images, labels = readfiles(training_directory, img_preprocess=method_1)
     test_images, test_labels = readfiles(test_directory, img_preprocess=method_1)
 
-    # Feature Selection
+    # Standardization
+    images = preprocessing.scale(images)
+    test_images = preprocessing.scale(test_images)
 
     # Feature Selection
     images = pca_transform(images, 3)
