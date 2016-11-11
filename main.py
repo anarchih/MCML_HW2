@@ -30,7 +30,7 @@ def method_1(im):
 
 
 def readfiles(path, img_preprocess):
-    all_files_name = listdir(path)[:1000]
+    all_files_name = listdir(path)
     images = [0] * len(all_files_name)
     labels = [0] * len(all_files_name)
 
