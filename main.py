@@ -11,11 +11,12 @@ class ImageItem(object):
         pass
 
 
-def pca_transform(data, n_components):
+def pca_transform(data_1, data_2, n_components):
     pca = decomposition.PCA(n_components=n_components)
+    data = np.concatenate((data_1, data_2))
     pca.fit(data)
     new_data = pca.transform(data)
-    return new_data
+    return new_data[:data_1.shape[0], :], new_data[data_1.shape[0]:, :]
 
 def method_1(im):
     # rgb to grey
@@ -57,8 +58,7 @@ def main():
     test_images = preprocessing.scale(test_images)
 
     # Feature Selection
-    images = pca_transform(images, 3)
-    test_images = pca_transform(test_images, 3)
+    images, test_images = pca_transform(images, test_images, 3)
 
     # Training
     tmp_label = [0] * len(labels)
