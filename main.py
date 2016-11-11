@@ -2,6 +2,7 @@ from os import listdir
 import numpy as np
 from PIL import Image
 from sklearn.svm import SVC
+from sklearn import decomposition, preprocessing
 import sys
 # from sklearn.metrics import precision_score, recall_score
 
@@ -9,6 +10,12 @@ class ImageItem(object):
     def __init__(self):
         pass
 
+
+def pca_transform(data, n_components):
+    pca = decomposition.PCA(n_components=n_components)
+    pca.fit(data)
+    new_data = pca.transform(data)
+    return new_data
 
 def method_1(im):
     # rgb to grey
@@ -47,6 +54,9 @@ def main():
 
     # Feature Selection
 
+    # Feature Selection
+    images = pca_transform(images, 3)
+    test_images = pca_transform(test_images, 3)
 
     # Training
     tmp_label = [0] * len(labels)
