@@ -51,9 +51,9 @@ def main():
     num_class = 26
     training_directory = sys.argv[1]
     test_directory = sys.argv[2]
-    model_method = sys.argv[3]
-    kernel_type = sys.argc[4]
-    feature_scaling = sys.argc[5]
+    model_method = int(sys.argv[3])
+    kernel_type = sys.argv[4]
+    feature_scaling = int(sys.argv[5])
 
     # Read, Preprocess and Downsize Image
     images, labels = readfiles(training_directory, img_preprocess=method_1)
@@ -104,7 +104,7 @@ def main():
         avg_p /= 26
         avg_r /= 26
         print("-------------------------")
-        print("  %s     %.4f   %.4f" % "AVG", avg_p, avg_r)
+        print("  AVG     %.4f   %.4f" % (avg_p, avg_r))
 
     # use the default model
     if model_method == 2:
@@ -115,7 +115,8 @@ def main():
         # Testing
         test_pred = model.predict(test_images)
         names = [chr(i + 65) for i in range(num_class)]
-        print(classification_report(test_labels, test_pred, target_names=names))
+        print(classification_report(test_labels, test_pred,
+                                    target_names=names, digits=4))
 
 
 if __name__ == "__main__":
